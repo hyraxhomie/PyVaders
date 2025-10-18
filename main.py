@@ -30,14 +30,25 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+
+        # Game update logic
         pygame.Surface.fill(screen, (0,0,0))
         updatable.update(dt)
         for item in drawable:
             item.draw(screen)
-
         pygame.display.flip()
+
+        # Collision Check
+        collision = False
+        for item in asteroids:
+            if item.collision(player):
+                collision = True
+                break
+        if collision:
+            break
         dt = clock.tick(60) / 1000
 
+    print("Game over!")
 
 if __name__ == "__main__":
     main()
