@@ -42,12 +42,16 @@ def main():
         pygame.display.flip()
 
         # Collision Check
-        collision = False
-        for item in asteroids:
-            if item.collision(player):
-                collision = True
+        player_collision = False
+        for asteroid in asteroids:
+            if asteroid.collision(player):
+                player_collision = True
                 break
-        if collision:
+            for shot in shots:
+                if asteroid.collision(shot):
+                    shot.kill()
+                    asteroid.split()
+        if player_collision:
             break
         dt = clock.tick(60) / 1000
 
